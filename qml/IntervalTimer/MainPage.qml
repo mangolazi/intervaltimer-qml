@@ -56,7 +56,8 @@ Page {
             onClicked:
             {
                 mainMenu.close()
-                window.pageStack.depth <= 1 ? Qt.quit() : window.pageStack.pop()
+                window.pageStack.depth <= 1 ? quitDialog.open() : window.pageStack.pop()
+                //window.pageStack.depth <= 1 ? Qt.quit() : window.pageStack.pop()
             }
         }
         ToolButton {
@@ -82,7 +83,23 @@ Page {
     }
 
 
-
+    // Quit dialog
+    QueryDialog {
+        id: quitDialog
+        titleText: "Quit"
+        message: "Are you sure you want to quit?\n"
+        acceptButtonText: "OK"
+        rejectButtonText: "Cancel"
+        onAccepted:
+        {
+            quitDialog.close()
+            Qt.quit()
+        }
+        onRejected:
+        {
+            quitDialog.close()
+        }
+    }
 
     // Save data dialog
     QueryDialog {
@@ -157,7 +174,7 @@ Page {
                 name: "LANDSCAPE"
                 PropertyChanges {
                     target: txtTimerDisplay
-                    font.pointSize: 28
+                    font.pointSize: 32
                     width: 320
                 }
                 AnchorChanges {
@@ -316,6 +333,7 @@ Page {
                 PropertyChanges {
                     target: listView
                     height: parent.height - 200
+                    width: parent - 360
                 }
                 AnchorChanges {
                     target: listView
